@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container">
+    <h1>Monitoring Screen</h1>
+
+    <!-- بداية جزء البحث -->
+    <form action="/search/" method="GET">
+      <!-- تفاصيل البحث -->
+    </form>
+
+    <!-- بداية جزء عرض حركة المخزون -->
+    <h2>Stock History</h2>
+    {% if stock_history %}
+      <ul>
+        {% for history in stock_history %}
+          <li>{{ history }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No stock history available.</p>
+    {% endif %}
+
+    <!-- بداية جزء عرض الوارد والصادر -->
+    <h2>Incoming and Outgoing</h2>
+    <p>Total Incoming: {{ total_incoming }}</p>
+    <p>Total Outgoing: {{ total_outgoing }}</p>
+
+    <!-- بداية جزء عرض المنتجات ذات الكمية المنخفضة -->
+    <h2>Low Stock Items</h2>
+    {% if low_stock_items %}
+      <ul>
+        {% for item in low_stock_items %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No low stock items.</p>
+    {% endif %}
+
+    <!-- بداية جزء عرض المخزون المتاح -->
+    <h2>Available Stock</h2>
+    <!-- تفاصيل المخزون المتاح -->
+
+    <!-- بداية جزء عرض الطلبات الحالية -->
+    <h2>Current Orders</h2>
+    <!-- تفاصيل الطلبات الحالية -->
+  </div>
+{% endblock %}

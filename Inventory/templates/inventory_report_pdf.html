@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>تقرير المخزن رقم {{ report.id }}</title>
+    <style>
+        h1, h2, p {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h1>تقرير المخزن رقم {{ report.id }}</h1>
+    <h2>تفاصيل المخزن:</h2>
+    <table>
+        <tr>
+            <th>اسم المنتج</th>
+            <th>الكمية</th>
+            <th>تاريخ الشراء</th>
+        </tr>
+        {% for item in stock_items %}
+            <tr>
+                <td>{{ item.Product_Category.name }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.purchase_date }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    <p>نسبة الاستهلاك: {{ consumption_percentage }}%</p>
+    <h2>العناصر التي تحتاج إلى إعادة طلبها:</h2>
+    <ul>
+        {% for item in items_to_reorder %}
+            <li>{{ item.Product_Category.name }}</li>
+        {% empty %}
+            <li>لا توجد عناصر تحتاج إلى إعادة طلبها</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<div class="side-content-wrap">
+    <div class="sidebar-left open rtl-ps-none" data-perfect-scrollbar="" data-suppress-scroll-x="true">
+        <ul class="navigation-left">
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home' %}">
+                    <i class="nav-icon i-Bar-Chart"></i>
+                    <span class="nav-text">الرئيسية</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home1' %}">
+                    <i class="nav-icon i-Add-User"></i>
+                    <span class="nav-text">المنتجات</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home2' %}">
+                    <i class="nav-icon i-Library"></i>
+                    <span class="nav-text">الواردات</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home3' %}">
+                    <i class="nav-icon i-Computer-Secure"></i>
+                    <span class="nav-text">الصادر</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home1' %}">
+                    <i class="nav-icon i-File-Clipboard-File--Text"></i>
+                    <span class="nav-text">تقارير</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-item-hold" href="{% url 'Inventory:home1' %}">
+                    <i class="nav-icon i-File-Clipboard-File--Text"></i>
+                    <span class="nav-text">شاشة المراقبة</span>
+                </a>
+                <div class="triangle"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="sidebar-overlay"></div>
+</div>
+
+<!-- section 1 -->
+<section class="ul-widget-stat-s1">
+    <div class="row">
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Car-Items"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">
+                            <a href="/home1/product_category/create/">إضافة منتج</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Data-Upload"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">
+                            <a href="/home1/product_category/list/">قائمة المنتجات</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Data-Upload"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">
+                            <a href="/home1/brand/create/">انواع المنتجات</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Data-Upload"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">
+                            <a href="/home1/building/create/">إضافة مبنى</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card card-icon-bg card-icon-bg-primary o-hidden mb-4">
+                <div class="card-body text-center">
+                    <i class="i-Data-Upload"></i>
+                    <div class="content">
+                        <p class="text-muted mt-2 mb-0">
+                            <a href="/home1/responsible_person/create/">IT</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

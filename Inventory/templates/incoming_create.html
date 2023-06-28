@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4 class="card-title mb-3">إضافة وارد جديد</h4>
+<div class="card">
+  <div class="card-body">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="product_category">فئة المنتج</label>
+        <select class="form-control" id="product_category" name="product_category">
+          {% for category in categories %}
+          <option value="{{ category.pk }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="brand">العلامة التجارية</label>
+        <select class="form-control" id="brand" name="brand">
+          {% for brand in brands %}
+          <option value="{{ brand.pk }}">{{ brand.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="quantity">الكمية</label>
+        <input type="number" class="form-control" id="quantity" name="quantity" required>
+      </div>
+      <div class="form-group">
+        <label for="purchase_invoice">فاتورة الشراء</label>
+        <input type="file" class="form-control-file" id="purchase_invoice" name="purchase_invoice" required>
+      </div>
+      <div class="form-group">
+        <label for="description">الوصف</label>
+        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">إضافة</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

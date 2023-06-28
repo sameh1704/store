@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4 class="card-title mb-3">عرض قائمة الوارد</h4>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Brand</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Purchase Invoice</th>
+        <th scope="col">Description</th>
+        <th scope="col">Actions</th> <!-- add a new column for actions -->
+      </tr>
+    </thead>
+    <tbody>
+      {% for incoming in incomings %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ incoming.product_category.name }}</td>
+        <td>{{ incoming.brand }}</td>
+        <td>{{ incoming.quantity }}</td>
+        <td>
+          <a href="{{ incoming.purchase_invoice.url }}" target="_blank">فاتورة الشراء</a>
+        </td>
+        <td>{{ incoming.description }}</td>
+        <td>
+          <a href="{% url 'Inventory:incoming_detail' pk=incoming.pk %}" class="btn btn-primary">تفاصيل</a> <!-- add a button for incoming_detail view Mohamed Gamal edit -->
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

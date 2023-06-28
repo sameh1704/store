@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Search Stock Items</title>
+</head>
+<body>
+	<h1>Search Stock Items</h1>
+
+	<form method="get" action="{% url 'search' %}">
+		<label for="category">Category:</label>
+		<input type="text" name="category" id="category" value="{{ request.GET.category }}">
+
+		<label for="start_date">Start Date:</label>
+		<input type="date" name="start_date" id="start_date" value="{{ request.GET.start_date }}">
+
+		<label for="end_date">End Date:</label>
+		<input type="date" name="end_date" id="end_date" value="{{ request.GET.end_date }}">
+
+		<input type="submit" value="Search">
+	</form>
+
+	{% if stock_items %}
+		<table>
+			<thead>
+				<tr>
+					<th>Product Name</th>
+					<th>Category</th>
+					<th>Quantity</th>
+					<th>Purchase Date</th>
+					<th>Issue Date</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for stock_item in stock_items %}
+					<tr>
+						<td>{{ stock_item.product_name }}</td>
+						<td>{{ stock_item.product_category.name }}</td>
+						<td>{{ stock_item.quantity }}</td>
+						<td>{{ stock_item.purchase_date }}</td>
+						<td>{{ stock_item.issue_date }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>No stock items found.</p>
+	{% endif %}
+</body>
+</html>

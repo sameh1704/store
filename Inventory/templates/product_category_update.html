@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>تعديل الفئة</h1>
+
+<form method="POST" action="{% url 'Inventory:product_category_update' pk=object.pk %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+
+  <div>
+    <button type="submit">تحديث</button>
+  </div>
+</form>
+
+{% if success %}
+  <p>تم تحديث الفئة بنجاح!</p>
+{% endif %}
+
+<a href="{% url 'Inventory:product_category_list' %}">العودة إلى قائمة الفئات</a>
+
+{% endblock %}

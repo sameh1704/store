@@ -1,0 +1,221 @@
+{% load static %}
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>مخازن مدارس المنار</title>
+    <link href="https://fonts.googleapis.com/css?family=Nunito:300,400,400i,600,700,800,900" rel="stylesheet" />
+    <link href="{% static 'dist-assets/css/themes/lite-purple.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dist-assets/css/plugins/perfect-scrollbar.min.css' %}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/droid-arabic-kufi" type="text/css"/>
+    <style>
+        body {
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #f8f9fa;
+        }
+
+        .main-header {
+            background-color: #f2f2f2;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 100px;
+        }
+
+        .header-part-right {
+            flex-grow: 1;
+            text-align: right;
+        }
+
+        .dropdown .user img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dropdown-menu {
+            min-width: 150px;
+        }
+
+        .dropdown-header {
+            font-weight: bold;
+            padding: 5px 15px;
+        }
+
+        .main-content {
+            padding: 30px;
+            background-color: #fff;
+        }
+
+        .separator-breadcrumb {
+            margin: 20px 0;
+            border-top: 1px solid #ccc;
+        }
+
+        .card {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background-color: #4d64d6;
+            border-color: #4d64d6;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            background-color: #3444a2;
+            border-color: #3444a2;
+        }
+
+        .app-footer {
+            background-color: #fff;
+            padding: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        .footer-bottom {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 5px;
+        }
+
+        .footer-bottom .logo {
+            margin-right: 10px;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body class="text-left">
+
+<div class="app-admin-wrap layout-sidebar-large">
+    <div class="main-header">
+        <div class="logo">
+            <img src="{% static 'dist-assets/images/logo.png' %}" alt="">
+        </div>
+        <div class="menu-toggle">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div style="margin: auto"></div>
+        <div class="header-part-right">
+            <!-- Full screen toggle -->
+            <i class="i-Full-Screen header-icon d-none d-sm-inline-block" data-fullscreen></i>
+            <!-- Grid menu Dropdown -->
+
+            <!-- User avatar dropdown -->
+            <div class="dropdown">
+                <div class="user col align-self-end">
+                    <img src="{% static 'dist-assets/images/faces/1.jpg' %}" id="userDropdown" alt=""
+                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                        <div class="dropdown-header">
+                            <i class="i-Lock-User mr-1"></i> Timothy Carlson
+                        </div>
+                        <a class="dropdown-item">Account settings</a>
+                        <a class="dropdown-item">Billing history</a>
+                        <a class="dropdown-item"
+                           href="http://demos.ui-lib.com/gull/html/layout1-rtl/signin.html">Sign out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============== Left side End ================-->
+    <div class="main-content-wrap sidenav-open d-flex flex-column">
+        <!-- ============ Body content start ============= -->
+        <div class="main-content">
+            <div class="breadcrumb">
+                <h1> </h1>
+            </div>
+            <div class="separator-breadcrumb"></div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 mx-auto">
+                    <p style="font-size: 20px; font-weight: bold;">تقارير المخزن عن فترة</p>
+                    <div class="card mb-5">
+                        <div class="card-body">
+                            <div class="row row-xs">
+                                <div class="col-md-5">
+                                    <input class="form-control " placeholder="من" id="datepicker1" />
+                                </div>
+                                <div class="col-md-5 mt-3 mt-md-0">
+                                    <input class="form-control" placeholder="الي" id="datepicker2" />
+                                </div>
+                                <div class="col-md-2 mt-3 mt-md-0">
+                                    <button class="btn btn-primary btn-block">اظهار</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div><!-- Footer Start -->
+        <div class="flex-grow-1"></div>
+        <div class="app-footer">
+            <div class="footer-bottom border-top pt-3 d-flex flex-column flex-sm-row align-items-center">
+                <a class="btn btn-primary text-white btn-rounded"
+                   href="https://themeforest.net/item/gull-bootstrap-laravel-admin-dashboard-template/23101970"
+                   target="_blank">MANAR TEAM (TAMER_KH / MOHAMED_GAMAL /  AHMED_Y )</a>
+                <span class="flex-grow-1"></span>
+                <div class="d-flex align-items-center">
+                    <img class="logo" src="{% static 'dist-assets/images/logo.png' %}" alt="">
+                    <div>
+                        <p class="m-0">&copy; مهندس سامح عبد الرحيم</p>
+                        <p class="m-0">All rights reserved</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- fotter end -->
+    </div>
+</div>
+<!-- ============ Search UI Start ============= -->
+<!-- ============ Search UI End ============= -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.13/js/gijgo.min.js" type="text/javascript"></script>
+<link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css"/>
+<script>
+    $('#datepicker1').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+    $('#datepicker2').datepicker({
+        uiLibrary: 'bootstrap4'
+    });
+</script>
+<script src="{% static 'dist-assets/js/plugins/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/plugins/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/plugins/perfect-scrollbar.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/scripts/script.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/scripts/sidebar.large.script.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/plugins/apexcharts.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/plugins/echarts.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/scripts/echart.options.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/scripts/card.metrics.script.min.js' %}"></script>
+<script src="{% static 'dist-assets/js/scripts/widgets-statistics.min.js' %}"></script>
+</body>
+</html>

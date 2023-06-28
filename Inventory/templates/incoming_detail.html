@@ -1,0 +1,16 @@
+<!-- incoming_detail.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<h4 class="card-title mb-3">تفاصيل الوارد</h4>
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">Product: {{ incoming.product_category.name }}</h5>
+    <p class="card-text">Brand: {{ incoming.brand }}</p>
+    <p class="card-text">Quantity: {{ incoming.quantity }}</p>
+    <p class="card-text">Purchase Invoice: <a href="{{ incoming.purchase_invoice.url }}" target="_blank">فاتورة الشراء</a></p>
+    <p class="card-text">Description: {{ incoming.description }}</p>
+    <a class="btn btn-primary" href="{% url 'Inventory:print_barcode' incoming.pk %}">طباعة الباركود</a>
+  </div>
+</div>
+{% endblock %}
