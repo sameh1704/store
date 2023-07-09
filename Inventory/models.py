@@ -45,6 +45,7 @@ class Building(models.Model):
         return self.name
 
 
+
 class ResponsiblePerson(models.Model):
     name = models.CharField(max_length=100)
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
@@ -114,29 +115,35 @@ class Outgoing(models.Model):
     building = models.ForeignKey(Building, on_delete=models.CASCADE)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     responsible_person = models.ForeignKey(ResponsiblePerson, on_delete=models.CASCADE)
-    barcode_number = models.SlugField(blank=True, unique=True)
+    barcode_number = models.CharField(max_length=100)
     issue_date = models.DateField(default=timezone.now)
+    
+
 
     def __str__(self):
         return f"Outgoing: {self.quantity} {self.product_category.name}"
 
 
-@receiver(pre_save, sender=Outgoing)
-def generate_barcode(sender, instance, **kwargs):
-    if not instance.barcode_number:
-        barcode_data = str(instance.id)
-        barcode_image = generate('EAN13', barcode_data, writer=ImageWriter())
-        barcode_filename = f"barcode_{instance.id}.png"
-        barcode_image.save(barcode_filename)
-        instance.barcode_number = barcode_filename
+    def save(self, *args, **kwargs):
+        # استخدام الباركود المقروء للبحث عن المنتج المراد صرفه في قاعدة البيانات والتحقق من توفره وكميته
+        try:
+            incoming_product = Incoming.objects.get(barcode=self.barcode)
+            if incoming_product.quantity >= self.quantity:
+                # قم بتحديث كمية المنتج المتوفرة في قاعدة البيانات
+                incoming_product.quantity -= self.quantity
+                incoming_product.save()
+            else:
+                # نفدت الكمية بالكامل، قم بحذف السجل
+                incoming_product.delete()
+                raise Exception('لا يوجد كمية كافية من المنتج للصرف')
+        except Incoming.DoesNotExist:
+            raise Exception('المنتج غير متوفر في قاعدة البيانات')
 
+        super(Outgoing, self).save(*args, **kwargs)
 ########################################################################################################################
 
 
-class Order(models.Model):
-    product_category = models.ForeignKey(Product_Category, on_delete=models.CASCADE)
-    quantity = models.IntegerField()
-    status = models.CharField(max_length=50)
+
     
 class MonitoringScreen(models.Model):
     product_category = models.ForeignKey(Product_Category, on_delete=models.CASCADE)
@@ -171,10 +178,7 @@ class MonitoringScreen(models.Model):
         available_stock = total_incoming - total_outgoing - self.current_orders()
         return available_stock
 
-    def current_orders(self):
-        orders = Order.objects.filter(product_category=self.product_category, status='open')
-        total_orders = sum([order.quantity for order in orders])
-        return total_orders
+  
 
 ########################################################################################################################
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product_Category, Brand, Building, Room, Incoming , ResponsiblePerson, Order , Outgoing, MonitoringScreen, InventoryReport
+from .models import Product_Category, Brand, Building, Room, Incoming , ResponsiblePerson , Outgoing, MonitoringScreen, InventoryReport
 
 
 
@@ -15,7 +15,7 @@ admin.site.register(Brand)
 admin.site.register(Building)
 admin.site.register(Room)
 admin.site.register(ResponsiblePerson)
-admin.site.register(Order)
+
 admin.site.register(Outgoing)
 admin.site.register(MonitoringScreen)
 admin.site.register(InventoryReport)

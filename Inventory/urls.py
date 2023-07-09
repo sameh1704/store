@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
-from .views import outgoingListView
+
 from Inventory import views 
 from .views import *
 
@@ -39,9 +39,9 @@ urlpatterns = [
     path('home2/incoming/print_barcode/<int:pk>/', views.print_barcode, name='print_barcode'),
     #########################################################################################################3
     path('home3/', views.home3, name='home3'),
-    #path('home3/outgoing/', outgoing_list, name='outgoing_list'),
-    #path('home3/outgoing_add/', OutgoingCreateView.as_view(), name='outgoing_add'),
-    path('home3/outgoing/', views.outgoing, name='outgoing'),
+    path('home3/outgoing/list/', OutgoingListView.as_view(), name='outgoing_list'),
+    
+    path('home3/outgoing/create/', OutgoingCreateView.as_view(), name='outgoing_create'),
  
     ####################################################################################################################
     path('monitoring/', MonitoringScreenView.as_view(), name='monitoring_screen'),

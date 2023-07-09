@@ -1,103 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div class="container mt-5">
-    <div class="row">
-      <div class="col-md-6 mx-auto">
-        <h1 class="text-center mb-4">Outgoing Form</h1>
-        <form method="POST">
-          {% csrf_token %}
-          <div class="form-group">
-            <label for="barcode">Barcode</label>
-            <input type="text" class="form-control" id="barcode" name="barcode" autofocus>
-          </div>
-          <div class="form-group">
-            <label for="product_category">Product Category</label>
-            <select class="form-control" id="product_category" name="product_category" disabled>
-              <option selected></option>
-              {% for category in categories %}
-                <option value="{{ category.id }}">{{ category.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="brand">Brand</label>
-            <select class="form-control" id="brand" name="brand" disabled>
-              <option selected></option>
-              {% for brand in brands %}
-                <option value="{{ brand.id }}">{{ brand.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="quantity">Quantity</label>
-            <input type="number" class="form-control" id="quantity" name="quantity">
-          </div>
-          <div class="form-group">
-            <label for="building">Building</label>
-            <select class="form-control" id="building" name="building">
-              <option selected></option>
-              {% for building in buildings %}
-                <option value="{{ building.id }}">{{ building.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="room">Room</label>
-            <select class="form-control" id="room" name="room">
-              <option selected></option>
-              {% for room in rooms %}
-                <option value="{{ room.id }}">{{ room.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="responsible_person">Responsible Person</label>
-            <select class="form-control" id="responsible_person" name="responsible_person">
-              <option selected></option>
-              {% for person in persons %}
-                <option value="{{ person.id }}">{{ person.name }}</option>
-              {% endfor %}
-            </select>
-          </div>
-          <button type="submit" class="btn btn-primary mt-3">Submit</button>
-        </form>
-      </div>
+<div class="container">
+  <h4 class="card-title mb-3">صرف المنتجات</h4>
+  <form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <label for="barcode_scanner_device">قراءة الباركود</label>
+      <input type="text" class="form-control" id="barcode_scanner_device" name="barcode_scanner_device" required>
     </div>
+    <button type="submit" class="btn btn-primary">صرف</button>
+  </form>
+  {% if error %}
+  <div class="alert alert-danger mt-3" role="alert">
+    {{ error }}
   </div>
-{% endblock %}
-
-{% block scripts %}
-  <script src="https://cdn.jsdelivr.net/npm/@zxing/library@0.17.1"></script>
-  <script>
-    let codeReader = new ZXing.BrowserBarcodeReader();
-    let barcodeInput = document.getElementById('barcode');
-    let productCategorySelect = document.getElementById('product_category');
-    let brandSelect = document.getElementById('brand');
-
-    function onBarcodeRead(result) {
-      barcodeInput.value = result.text;
-
-      // Get product category and brand from barcode
-      let barcodeData = result.text.split(',');
-      let productCategory = barcodeData[0];
-      let brand = barcodeData[1];
-
-      // Set product category and brand in the form
-      for (let i = 0; i < productCategorySelect.options.length; i++) {
-        if (productCategorySelect.options[i].text === productCategory) {
-          productCategorySelect.selectedIndex = i;
-          break;
-        }
-      }
-      for (let i = 0; i < brandSelect.options.length; i++) {
-        if (brandSelect.options[i].text === brand) {
-          brandSelect.selectedIndex = i;
-          break;
-        }
-      }
-    }
-
-    codeReader.decodeFromInputVideoDevice(undefined, 'video').then(onBarcodeRead).catch(err => console.error(err));
-  </script>
+  {% endif %}
+</div>
 {% endblock %}

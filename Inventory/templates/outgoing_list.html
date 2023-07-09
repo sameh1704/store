@@ -1,34 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h4 class="card-title mb-3">عرض قائمة الصادر</h4>
+<h4 class="card-title mb-3">عرض قائمة المنتجات الصادرة</h4>
 <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Product</th>
-        <th scope="col">Brand</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Building</th>
-        <th scope="col">Room</th>
-        <th scope="col">Responsible Person</th>
-        <th scope="col">Actions</th>
+        <th scope="col">المنتج</th>
+        <th scope="col">الفئة</th>
+        <th scope="col">البراند</th>
+        <th scope="col">الكمية</th>
+        <th scope="col">المبنى</th>
+        <th scope="col">الغرفة</th>
+        <th scope="col">المسؤول</th>
+        <th scope="col">تاريخ الإصدار</th>
       </tr>
     </thead>
     <tbody>
-      {% for outgoing in outgoing_list %}
+      {% for outgoing in outgoings %}
       <tr>
         <th scope="row">{{ forloop.counter }}</th>
-        <td>{{ outgoing.product_category.name }}</td>
+        <td>
+          {% for product_category in outgoing.product_category.all %}
+            {{ product_category.name }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            -
+          {% endfor %}
+        </td>
+        <td>
+          {% for product_category in outgoing.product_category.all %}
+            {{ product_category.category.name }}{% if not forloop.last %}, {% endif %}
+          {% empty %}
+            -
+          {% endfor %}
+        </td>
         <td>{{ outgoing.brand.name }}</td>
         <td>{{ outgoing.quantity }}</td>
         <td>{{ outgoing.building.name }}</td>
         <td>{{ outgoing.room.name }}</td>
         <td>{{ outgoing.responsible_person.name }}</td>
-        <td>
-          <a href="{% url 'Inventory:outgoing_detail' pk=outgoing.pk %}" class="btn btn-primary">تفاصيل</a>
-        </td>
+        <td>{{ outgoing.issue_date }}</td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="9">لا توجد بيانات</td>
       </tr>
       {% endfor %}
     </tbody>

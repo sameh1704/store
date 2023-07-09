@@ -220,33 +220,69 @@ def print_barcode(request, pk):
 def home3(request):
     return render(request, 'home3.html')
 
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import Incoming
+from .forms import OutgoingForm
 
-
-class outgoingListView(ListView):
-    model = Incoming
-    template_name = 'outgoing_list.html'
-    context_object_name = 'outgoing'
-def outgoing_list(request):
-    outgoings = Outgoing.objects.all()
-    return render(request, 'outgoing_list.html', {'outgoings': outgoings})
-
-def outgoing(request):
-    if request.method == 'POST':
+class OutgoingListView(View):
+    def get(self, request):
+        return render(request, 'outgoing_list.html')
+    
+    def post(self, request):
         form = OutgoingForm(request.POST)
         if form.is_valid():
             barcode_number = form.cleaned_data['barcode_number']
             try:
                 incoming = Incoming.objects.get(barcode_number=barcode_number)
             except Incoming.DoesNotExist:
-                return HttpResponse('Barcode not found')
-            outgoing = form.save(commit=False)
-            outgoing.product_category = incoming.product_category
-            outgoing.brand = incoming.brand
-            outgoing.save()
-            return HttpResponse('Outgoing created successfully')
-    else:
+                return render(request, 'outgoing_list.html', {'error': 'المنتج غير موجود'})
+            
+            if incoming.quantity <= 0:
+                return render(request, 'outgoing_list.html', {'error': 'الكمية المتوفرة غير كافية'})
+            
+            incoming.quantity -= 1
+            incoming.save()
+            
+            form.save()
+            return redirect('outgoing_list')
+        
+        return render(request, 'outgoing_list.html', {'form': form})
+
+from django.shortcuts import render, redirect
+from django.views import View
+from .models import Incoming
+from .forms import OutgoingForm
+
+class OutgoingCreateView(View):
+    def get(self, request):
         form = OutgoingForm()
-    return render(request, 'outgoing.html', {'form': form})
+        return render(request, 'outgoing.html', {'form': form})
+    
+    def post(self, request):
+        barcode_scanner_device = request.POST['barcode_scanner_device']
+        try:
+            incoming = Incoming.objects.get(barcode_number=barcode_scanner_device)
+        except Incoming.DoesNotExist:
+            form = OutgoingForm(request.POST)
+            return render(request, 'outgoing.html', {'form': form, 'error': 'المنتج غير موجود'})
+        
+        if incoming.quantity <= 0:
+            form = OutgoingForm(request.POST)
+            return render(request, 'outgoing.html', {'form': form, 'error': 'الكمية المتوفرة غير كافية'})
+        
+        incoming.quantity -= 1
+        if incoming.quantity == 0:
+            incoming.delete()
+        else:
+            incoming.save()
+        
+        form = OutgoingForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('outgoing_list')
+        
+        return render(request, 'outgoing.html', {'form': form})
 
 
 
@@ -260,7 +296,7 @@ def outgoing(request):
 from django.shortcuts import render
 from django.views.generic import TemplateView
 from django.db.models import Sum, Q
-from .models import Product_Category, Incoming, Outgoing, Order, MonitoringScreen
+from .models import Product_Category, Incoming, Outgoing, MonitoringScreen
 
 from django.shortcuts import get_object_or_404
 
